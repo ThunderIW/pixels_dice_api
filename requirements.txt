@@ -1,1 +1,4 @@
 fastapi[all]
+pendulum
+json
+pydantic
