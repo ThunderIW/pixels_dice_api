@@ -1,5 +1,7 @@
 # main.py
 import socket
+
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, PlainTextResponse
 import pydantic
@@ -18,6 +20,8 @@ def root():
     return PlainTextResponse("OK. POST JSON to /pixels, GET /last_roll")
 
 last_roll={}
+rolls=[]
+
 @app.post("/pixels")
 async def get_dice_info(request: Request):
     # 👇 await works because the function is async
@@ -27,6 +31,9 @@ async def get_dice_info(request: Request):
     print(face_value)
     last_roll.clear()
     last_roll.update(data)
+    print(len(rolls))
+    if len(rolls)<=1:
+        rolls.append(face_value)
     return {"status": "ok", "received": data}
 
 
@@ -50,6 +57,34 @@ def insert_new_characters(character: DnDCharacter):
 @app.get("/characters")
 def get_all_characters():
     return characters
+
+@app.get("/rollWithAdvantages")
+def roll_with_advantages():
+    advantage_roll = 0
+    if len(rolls)>1:
+        advantage_roll=max(rolls)
+    return JSONResponse({"advantage":advantage_roll,"rolls":rolls})
+
+
+@app.get("/rollWithDisadvantages")
+def roll_with_disadvantages():
+    disadvantage_roll = 0
+    if len(rolls)>1:
+        disadvantage_roll = min(rolls)
+    return JSONResponse({"Disadvantage":disadvantage_roll,"rolls":rolls})
+
+@app.delete("/ClearRolls")
+def clearRolls():
+    try:
+        rolls.clear()
+
+    except Exception as e:
+        print(e)
+        return JSONResponse({"status": "error", "message": str(e)})
+
+    return JSONResponse({"status": "ok"})
+
+
 
 
 
