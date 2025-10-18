@@ -58,7 +58,7 @@ def insert_new_characters(character: DnDCharacter):
 def get_all_characters():
     return characters
 
-@app.get("/rollWithAdvantages")
+@app.get("/rollWithAdvantage")
 def roll_with_advantages():
     advantage_roll = 0
     if len(rolls)>1:
@@ -66,7 +66,7 @@ def roll_with_advantages():
     return JSONResponse({"advantage":advantage_roll,"rolls":rolls})
 
 
-@app.get("/rollWithDisadvantages")
+@app.get("/rollWithDisadvantage")
 def roll_with_disadvantages():
     disadvantage_roll = 0
     if len(rolls)>1:
