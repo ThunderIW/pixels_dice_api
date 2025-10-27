@@ -86,7 +86,11 @@ def clearRolls():
 
 
 
-
+@app.get("get_Dice_battery_level")
+async def get_Dice_battery_level():
+    battery_level=last_roll.get("batteryLevel")
+    return JSONResponse({"battery_level":battery_level})
+    
 
 @app.get("/last_roll")
 async def get_last_roll(request: Request):
