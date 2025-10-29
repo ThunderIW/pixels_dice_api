@@ -7,6 +7,8 @@ This project was created to help interact with the [Pixels dice](https://gamewit
 ## Features
 - Accept dice roll submission (d20)
 - Query the last_rolled value that was sent and use it in your applications 
+- get dice battery level 
+- calculated both advantage and disadvantage rolls 
 
 ## FastAPI Endpoints 
 - live api server deployed here: https://pixels-dice-api.onrender.com
